@@ -1,3 +1,11 @@
+# CubeLang
+
+An esotaric programming language based on representing a program and all of its data in three dimensional space in as small of a cube as possible.
+
+### Running
+
+This language is run by an interpreter written in C. Just compile the interpreter and execute it by supplying the path to a cubelang file as a command line argument. The flag -d can also be set to give some limited debug information about the internal state of the CubeLang program. 
+
 ### Overview
 
 **Programs**
@@ -5,6 +13,8 @@
 Every program consists of a NxNxN cube of 16 bit values, one 16 bit register, and two spatial pointers.
 
 You define a program by writing out that array as a list of N^3 values written in hex separated by spaces. The interpreter otherwise ignores whitespace, so these values can be arranged in any way. However, it is recommended that the rows of values be separated by newlines and layers be separated by multiple newlines. The dimensions of the cube must be equal otherwise the program will not run.
+
+The cube can be any size you want (that fits into a 32 bit integer and in your RAM), but the *smaller your cube is the more style points you get*.
 
 The first value in every program is the value of N; the size of the cube in hex
 
@@ -47,6 +57,22 @@ The lowest 6 bits of every instruction indicate the movement of the instruction 
 The next 5 bits represent the operation code and represents the operation that is preformed
 
 The next 3 bits are only used for conditional jumps. They represent the direction that the instruction pointer will move in the case that the condition is satisfied. If the condition is not satisfied, the pointer will move according to the lowest three bits as normal.
+
+**Assembler Format**
+
+Values can also be written in a more readable format that will be interpreted as the hex values at runtime. This format consists of 5 or 6 characters in the  format:
+| Conditional Move (optional) | Instruction | Data Move | Instruction Move |
+
+Instructions are written as their three-character representation as shown in the table above.
+
+Move directions are represented by the characters x, X, y, Y, z, Z, and _. These characters represent the axis of motion and the case represents the direction of motion. Uppercase is positive ('X' is +x, and 'x' is -x, etc). '_' represents no movement. 
+
+An few examples of this would be:
+ADDxZ - Add the value from the data pointer into the register. Move the data pointer in the -x direction and the instruction pointer in the +z direction.
+ZMPS_z - Move the data pointer in the +z direction if the register is positive and in the -z direction otherwise
+LODxx - Load  
+
+
 
 **Instruction List**
 All instructions operate on the values in the register and the value currently pointed at by the data pointer.
@@ -113,14 +139,4 @@ For the descriptions R represents the value in the register and V represents the
 |     RED     |  17  |  11  | 
 |     WRT     |  18  |  12  |
 |     END     |  19  |  13  |
-
-**Assembler Format**
-
-Values can also be written in a more readable format that will be interpreted at runtime. This format consists of 5 or 6 characters in the  format:
-| Conditional Move (optional) | Instruction | Data Move | Instruction Move |
-
-Instructions are written as their three-character representation as shown in the table above.
-
-Move directions are represented by the characters x, X, y, Y, z, Z, and _. These characters represent the axis of motion and the case represents the direction of motion. '_' represents no movement. Uppercase is positive.
-
 
