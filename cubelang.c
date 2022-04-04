@@ -6,7 +6,7 @@ int main(int argc, char** argv){
         fprintf(stderr, "Invalid arguments. Expected format:\n\"cubelang [filename.cl] [-d]\"");
         exit(1);
     }
-    if(argc ==3 && argv[2][0] == '-' && argv[2][1] == 's'){
+    if(argc ==3 && argv[2][0] == '-' && argv[2][1] == 'd'){
         debug = 1;
     }
 
